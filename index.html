@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-width: 300px;
+            justify-content: flex-end;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .nav-dot:hover,
+        .nav-dot.active {
+            background: #fff;
+            transform: scale(1.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 1s ease-in;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: center;
+            opacity: 0.95;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #fff;
+            padding: 12px 30px;
+            color: #fff;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s;
+            margin: 20px 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .childhood-image {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .childhood-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 30px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.3);
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 40px;
+        }
+
+        .heart {
+            display: inline-block;
+            color: #ff6b9d;
+            animation: heartbeat 1.5s infinite;
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            border-left: 5px solid #fff;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .letter {
+            background: rgba(255, 255, 255, 0.95);
+            color: #4a4a4a;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            margin: 30px auto;
+            line-height: 2;
+            font-style: italic;
+        }
+
+        .letter p {
+            color: #4a4a4a;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .letter ol {
+            color: #4a4a4a;
+            text-align: left;
+            margin-bottom: 30px;
+            margin-left: 20px;
+        }
+
+        .letter ol li {
+            margin-bottom: 15px;
+        }
+
+        .signature {
+            text-align: right;
+            font-size: 1.3em;
+            margin-top: 40px;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .quote-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #fff;
+            font-style: italic;
+            backdrop-filter: blur(10px);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+
+            .childhood-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .letter {
+                padding: 30px;
+            }
+
+            .nav {
+                top: 10px;
+                right: 10px;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="nav" id="navigation"></div>
+
+    <div class="container">
+        <!-- Page 1: Birthday Wish -->
+        <div class="page active" id="page1">
+            <div class="childhood-image">
+                <img src="assets/birth.jpg" alt="Childhood Photo">
+            </div>
+            <h1>Belated Happy Birthday! 🎉</h1>
+            <h2>To My Everything <span class="heart">♥</span></h2>
+            <p>There's something special about the day — a soft kind of magic that started the moment you came into the
+                world and made it a little warmer, a little brighter.</p>
+            <p class="heart">♥</p>
+            <p>Wishing you endless joy, boundless love, and all the happiness your heart can hold. May this year bring
+                you everything you've been dreaming of and more.</p>
+            <div class="buttons-container">
+                <button class="btn" onclick="nextPage()">Continue ✨</button>
+            </div>
+        </div>
+
+        <!-- Page 2: Video Page -->
+        <div class="page" id="page2">
+            <h1>Celebrating My Queen🎂</h1>
+            <p>Here's a little something I made to celebrate your special day...</p>
+
+            <div class="video-container">
+                <iframe src="https://drive.google.com/file/d/1-hXua1bi7NkWFORf6b2jzOiGapNTUgI1/preview" width="640"
+                    height="360" allow="autoplay"
+                    style="border: none; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                </iframe>
+            </div>
+
+            <p>Today is the day that the most auspicious little life born. Thankyou to your Mom & Dad for such a special
+                gift in my life.</p>
+
+            <div class="buttons-container">
+                <button class="btn" onclick="prevPage()">← Back</button>
+                <button class="btn" onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+
+
+        <!-- Page 3: How Life Changed -->
+        <div class="page" id="page3">
+            <h1>How You Changed My Life 🌟</h1>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Before You (04th September 2025, 07:57 PM)</h3>
+                    <p>Life was a routine. Days passed by without much color or meaning. I was just going through the
+                        motions, not really living.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>When You Came</h3>
+                    <p>You became the reason my world found meaning again — the calm in my chaos, the heartbeat behind
+                        every breath. Every morning begins with your glimpse, and every night ends with your thought.
+                        I'd give everything just to see that smile that makes my life feel alive. Words fail, languages
+                        fall short, yet my heart keeps whispering your name in every silence. You're not just someone I
+                        love — you're the reason I exist, the story I wish I could write forever.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>With You</h3>
+                    <p>Since the day we met, life took a turn I never saw coming. I found myself humming songs I'd never
+                        heard before and seeing beauty in things I once overlooked. Your presence made every moment feel
+                        alive — as if the world finally learned how to breathe with me. You didn't just enter my life;
+                        you became its meaning.
+                    <p> -- Ap meri aadat ban chuki ho, jaan. </p>
+                    </p>
+                </div>
+            </div>
+            <div class="quote-box">
+                <p>"The night's cold wind brushes past, the smoke dances with the stars, and in that silence — it's you
+                    I feel. You didn't just walk into my life; you rewrote it with warmth I never knew I needed. Even in
+                    the stillness of midnight, your presence lingers — soft, haunting, and infinite, like the last drag
+                    of a cigarette that refuses to fade."</p>
+            </div>
+            <div class="buttons-container">
+                <button class="btn" onclick="prevPage()">← Back</button>
+                <button class="btn" onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Page 4: Photo Gallery -->
+        <div class="page" id="page4">
+            <h1>Moments Together 📸</h1>
+            <p>Every memory with you is precious. Here's a collection of moments that mean the world to me.</p>
+            <div class="gallery">
+                <div class="gallery-item"><img src="assets/12.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/8.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/10.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/3.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/2.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/9.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/7.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/5.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/4.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/1.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/11.jpeg" alt=""></div>
+                <div class="gallery-item"><img src="assets/6.jpeg" alt=""></div>
+            </div>
+
+            <div class="buttons-container">
+                <button class="btn" onclick="prevPage()">← Back</button>
+                <button class="btn" onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Page 5: What You Mean to Me -->
+        <div class="page" id="page5">
+            <h1>What You Mean to Me 💫</h1>
+            <p>You're my love. You're the person I turn to when the world gets too heavy. You're my confidant,
+                my guide, my inspiration.</p>
+            <p class="heart">♥</p>
+            <p>Your advice has saved me from countless mistakes. Your smile has lifted me from the darkest days. Your
+                belief in me has pushed me to be better than I ever thought I could be.</p>
+            <div class="quote-box">
+                <p>"I don't know what label defines us, but I know this - you're someone I admire deeply, someone I
+                    follow without question, someone whose happiness matters to me more than my own."</p>
+            </div>
+            <p>You're my Jaan. You're someone I cherish beyond words, someone I'm grateful for every
+                single day.</p>
+            <div class="buttons-container">
+                <button class="btn" onclick="prevPage()">← Back</button>
+                <button class="btn" onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Page 6: Our Journey -->
+        <div class="page" id="page6">
+            <h1>Our Journey Together 🌸</h1>
+            <p>From strangers to Jaan, from best friends to... whatever beautiful thing this is. Our journey has
+                been nothing short of magical.</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>The Little Things</h3>
+                    <p>Late night conversations that turned into early mornings. Inside jokes that only we understand.
+                        Comfortable silences that speak volumes.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>The Big Moments</h3>
+                    <p>Supporting each other through challenges. Celebrating victories together. Being there when it
+                        mattered most.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Looking Forward</h3>
+                    <p>Whatever the future holds, I hope you're in it. Because life is simply better with you around.
+                    </p>
+                </div>
+            </div>
+            <p class="heart">♥</p>
+            <div class="buttons-container">
+                <button class="btn" onclick="prevPage()">← Back</button>
+                <button class="btn" onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Page 7: Special Letter -->
+        <div class="page" id="page7">
+            <h1>A Letter Just for You 💌</h1>
+            <div class="letter">
+                <p>Dear Vanshi,</p>
+
+                <p>As I sit here writing this, the night feels quieter, softer—almost as if the world itself knows I'm
+                    thinking of you. You've become such an inseparable part of my life that I can't imagine a day
+                    without your voice, your laughter, or your presence.</p>
+
+                <p>You're the person I think about first when something good happens. The voice I need to hear when
+                    things go wrong. The one whose opinion matters most to me.</p>
+
+                <p>I follow your advice not because I have to, but because I trust you completely. I admire you not just
+                    for who you are, but for who you inspire me to become. You've shown me kindness when I needed it
+                    most, patience when I was difficult, and belief when I doubted myself.</p>
+
+                <p>Life feels warmer with you in it. The way your eyes light up over crispy potatoes and french fries,
+                    or how KitKat becomes your little cure for rough moments—it all makes you beautifully, uniquely you.
+                    I know how much your father means to you, and how much strength it takes to handle your OCD. I
+                    promise, I'll be there through it all—with care, patience, and love that never fades.</p>
+
+                <p>My promises to you:</p>
+                <ol>
+                    <li>I'll never hurt you—never intentionally, never carelessly.</li>
+                    <li>Your happiness and comfort will always come before everything else.</li>
+                    <li>I'll cherish our quiet evenings and make sure you always feel safe and cared for.</li>
+                    <li>I'll create little moments of peace and joy, even on ordinary days.</li>
+                    <li>Every decision in my life will carry your voice, your presence, your consent.</li>
+                    <li>I'll respect your choices, stand by you through every storm, and never leave your side when you
+                        need me most.</li>
+                </ol>
+
+                <p>Vanshi, you've shown me what love truly feels like—not the kind written in stories, but the kind that
+                    lives in trust, comfort, and quiet togetherness. You didn't just enter my life; you became the
+                    reason it finally feels complete.</p>
+
+                <p>Here's to you, to us, and to the endless warmth you bring into my world.</p>
+
+                <p>With all my heart.</p>
+
+
+                <div class="signature">
+                    Forever grateful,<br>
+                    Kaushik
+                </div>
+            </div>
+            <div class="buttons-container">
+                <button class="btn" onclick="prevPage()">← Back</button>
+                <button class="btn" onclick="goToPage(1)">Start Over ↺</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const totalPages = 7;
+        let currentPage = 1;
+
+        // Create navigation dots
+        const nav = document.getElementById('navigation');
+        for (let i = 1; i <= totalPages; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot';
+            if (i === 1) dot.classList.add('active');
+            dot.onclick = () => goToPage(i);
+            nav.appendChild(dot);
+        }
+
+        // Create stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        function goToPage(pageNum) {
+            if (pageNum < 1 || pageNum > totalPages) return;
+
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+            document.querySelector('.nav-dot.active').classList.remove('active');
+
+            currentPage = pageNum;
+
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            nav.children[currentPage - 1].classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextPage() {
+            goToPage(currentPage + 1);
+        }
+
+        function prevPage() {
+            goToPage(currentPage - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') prevPage();
+        });
+    </script>
+</body>
+
+</html>
